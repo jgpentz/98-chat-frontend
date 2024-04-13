@@ -1,0 +1,43 @@
+.RoomList {
+    height: 460px;
+    width: 350px;
+    position: relative;
+    top: 100px; left:100px;
+} 
+
+.Header {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.List {
+    height: 250px;
+}
+
+.MsnLogo {
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
+    width: 334px;
+}
+
+.RoomBox {
+    height: 50px;
+    display: flex;
+
+    &:hover {
+        background: #c9c9c9;
+    }
+}
+
+.RoomIcon {
+    height: 100%;
+    margin: 0;
+    font-size: 40px;
+}
+
+.RoomName {
+    font-size: 18px;
+    font-weight: 800;
+    margin-left: 15px;
+}
