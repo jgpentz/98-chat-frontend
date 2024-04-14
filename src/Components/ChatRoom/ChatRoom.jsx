@@ -5,7 +5,7 @@ import Draggable from 'react-draggable';
 import classes from './ChatRoom.module.css'
 
 
-const ChatRoom = ({ roomName }) => {
+const ChatRoom = ({ roomName, onRoomClose }) => {
     return (
         <Draggable handle=".handle">
             <div className={`window ${classes.ChatRoom}`}>
@@ -14,7 +14,7 @@ const ChatRoom = ({ roomName }) => {
                     <div className="title-bar-controls">
                         <button aria-label="Minimize" />
                         <button aria-label="Maximize" />
-                        <button aria-label="Close" />
+                        <button aria-label="Close" onClick={() => onRoomClose(roomName)}/>
                     </div>
                 </div>
 
