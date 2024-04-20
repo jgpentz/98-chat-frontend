@@ -19,18 +19,33 @@ const ChatRoom = ({ roomName, onRoomClose }) => {
                 </div>
 
                 <div className="window-body">
-                    <p className={classes.Header}>Room List:</p>
+                    <p className={classes.Header}>Chat:</p>
                     <ul className={`tree-view ${classes.List}`}>
                     <li>
                         <div 
-                            className={classes.RoomBox} 
-                            onClick={() => onRoomClick('🍃 sencha')}
+                            className={classes.ChatBox} 
+                            onClick={() => onRoomClick(roomName)}
                         >
-                            <p className={classes.RoomIcon}>🍃</p>
-                            <p className={classes.RoomName}>Sencha</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
+                            <p className={classes.RoomIcon}>{roomName}</p>
                         </div>
                     </li>
                     </ul>
+                    <div className={classes.InputArea}>
+                        <textarea className={classes.InputText} id="text20" rows="5"></textarea>
+                        <button className={classes.Send}>Send</button>
+                    </div>
                 </div>
 
             </div>

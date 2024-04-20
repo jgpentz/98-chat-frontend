@@ -30,6 +30,20 @@ const RoomList = ({ onRoomClick }) => {
                         <p className={classes.RoomIcon}>🍃</p>
                         <p className={classes.RoomName}>Sencha</p>
                     </div>
+                    <div 
+                        className={classes.RoomBox} 
+                        onClick={() => onRoomClick('☕ Coffee')}
+                    >
+                        <p className={classes.RoomIcon}>☕</p>
+                        <p className={classes.RoomName}>Coffee</p>
+                    </div>
+                    <div 
+                        className={classes.RoomBox} 
+                        onClick={() => onRoomClick('🧋 Bubble Tea')}
+                    >
+                        <p className={classes.RoomIcon}>🧋</p>
+                        <p className={classes.RoomName}>Bubble Tea</p>
+                    </div>
                 </li>
                 </ul>
             </div>

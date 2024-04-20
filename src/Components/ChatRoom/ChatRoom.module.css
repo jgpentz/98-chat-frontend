@@ -1,4 +1,26 @@
 .ChatRoom {
+    width: 400px;
+    height: 440px;
+    position: absolute;
+}
+
+.ChatBox {
+    overflow: auto;
+    height: 275px;
+}
+
+.InputArea {
+    display: flex;
+}
+
+.InputText {
+    margin-top: 15px;
     width: 300px;
-    height: 400px;
+    resize: none;
+}
+
+.Send {
+    margin-left: 15px;
+    margin-top: 15px;
+    width: 50px;
 }

@@ -15,8 +15,10 @@ const App = () => {
     }
 
     const handleRoomClick = (roomName) => {
-        // Add the clicked room to the activeRooms array
-        setActiveRooms((prevRooms) => [...prevRooms, roomName]);
+        if (!activeRooms.includes(roomName)) {
+            // Add the clicked room to the activeRooms array
+            setActiveRooms((prevRooms) => [...prevRooms, roomName]);
+        }
     };
 
     return (
