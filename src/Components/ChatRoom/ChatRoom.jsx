@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import classes from './ChatRoom.module.css';
 
 const ChatRoom = ({ roomName, pos_x, pos_y, onRoomClose }) => {
   const [active, setActive] = useState(false);
   const [zIndex, setZIndex] = useState(1);
+    const [inputText, setInputText] = useState("")
+    const [chatLog, setChatLog] = useState([])
 
   const makeActiveWindow = () => {
     // Toggle active state
@@ -36,6 +38,65 @@ const ChatRoom = ({ roomName, pos_x, pos_y, onRoomClose }) => {
     zIndex: active ? zIndex : 1, // Use active state and zIndex to control stacking
   };
 
+    const sendMsg = async () => {
+        let msg = {
+            user: "Jesus",
+            msg: inputText,
+            chatRoom: roomName
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/write_msg", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(msg)
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Clear the input textarea after sending
+            setInputText('');
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+
+    const handleInputChange = (event) => {
+        setInputText(event.target.value);
+    };
+
+    const fetchData = async () => {
+        try {
+            const baseUrl = "http://localhost:8080/read_chat";
+            const params = {chat_room: roomName};
+            const url = new URL(baseUrl);
+            url.search = new URLSearchParams(params).toString();
+
+            const response = await fetch(url.toString());
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            setChatLog(jsonData)
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch data on component mount
+        fetchData();
+
+        // Fetch chat data periodically (every second)
+        const interval = setInterval(fetchData, 1000);
+
+        return () => clearInterval(interval);
+    }, [roomName]);
+
   return (
         <Draggable handle=".handle" onMouseDown={makeActiveWindow}>
             <div style={roomLocation} className={`window ${classes.ChatRoom}`}>
@@ -55,25 +116,26 @@ const ChatRoom = ({ roomName, pos_x, pos_y, onRoomClose }) => {
                             className={classes.ChatBox} 
                             onClick={() => onRoomClick(roomName)}
                         >
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
-                            <p className={classes.RoomIcon}>{roomName}</p>
+                            {Array.isArray(chatLog) && chatLog.map((msg, index) => (
+                                <p key={index}>
+                                    {msg.User && <strong>{msg.User}:</strong>} {/* Render User if not null */}
+                                    {msg.Msg && msg.Msg} {/* Render Msg if not null */}
+                                </p>
+                            ))}
                         </div>
                     </li>
                     </ul>
                     <div className={classes.InputArea}>
-                        <textarea className={classes.InputText} id="text20" rows="5"></textarea>
-                        <button className={classes.Send}>Send</button>
+                        <textarea 
+                            className={classes.InputText} 
+                            value={inputText}
+                            onChange={handleInputChange}
+                            placeholder='Say something...'
+                            id="text20" 
+                            rows="5"
+                        />
+
+                        <button className={classes.Send} onClick={sendMsg}>Send</button>
                     </div>
                 </div>
 
